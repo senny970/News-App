@@ -76,7 +76,7 @@ const newsService = (function () {
     return {
         topHeadlines(country = 'ua', cb) {
             http.get(`${apiUrl}/top-headlines?country=${country}&category=technology&apiKey=${apiKey}`, cb);
-        },
+                },
         everything(query, cb) {
             http.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`, cb);
         }
@@ -85,6 +85,7 @@ const newsService = (function () {
 
 //  init selects
 document.addEventListener('DOMContentLoaded', function () {
+    M.AutoInit();
     loadNews();
 });
 
@@ -101,13 +102,11 @@ function loadNews() {
         newsService.everything(searchText, onGetResponse);
     }
 }
-
 //On get response from server
 function onGetResponse(err, res) {
     removePreloader();
 
     if (err) {
-        console.error(err);
         showAlert(err, 'error-msg');
         return;
     }
@@ -140,13 +139,17 @@ function renderNews(news) {
 //News item template
 function newsTemplate({urlToImage, title, url, description}) {
     return `
-        <div class="col col-lg-3 col-bottom-buffer">
-            <div class="card news-card">
-                <img src="${urlToImage}" class="card-img-top news-card-img" alt="preview">
-                <div class="card-body news-card-body">
-                    <h5 class="card-title news-card-title">${title}</h5>
-                    <p class="card-text news-card-text">${description}</p>
-                    <a href="${url}" class="btn btn-primary news-card-link" target="_blank">More details</a>
+        <div class="col s12">
+            <div class="card">
+                <div class="card-image">
+                    <img src="${urlToImage}">
+                    <span class="card-title">${title || 'Title'}</span>
+                </div>
+                <div class="card-content">
+                    <p>${description || 'description'}</p>
+                </div>
+                <div class="card-action">
+                    <a href="${url}">Read more</a>
                 </div>
             </div>
         </div>

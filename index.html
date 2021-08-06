@@ -4,72 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
-    />
-
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
     <title>News App</title>
 </head>
 <body>
-<nav class="blue lighten-2">
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">News App</a>
-    </div>
-</nav>
-<div class="search-controls">
-    <div class="container">
-        <div class="row">
-            <div class="col s12 m6">
-                <div class="card">
-                    <form name="newsControls">
-                        <div class="card-content">
-                            <span class="card-title">Search news</span>
-                            <div class="input-field">
-                                <select name="country" id="country">
-                                    <option value="ua">Ukraine</option>
-                                    <option value="ru">Russia</option>
-                                    <option value="us">United States</option>
-                                </select>
-                                <label>Choose your country</label>
-                            </div>
-                            <div class="input-field">
-                                <input
-                                        type="text"
-                                        id="autocomplete-input"
-                                        class="autocomplete"
-                                        name="search"
-                                />
-                                <label for="autocomplete-input">Search</label>
-                            </div>
-                        </div>
-                        <div class="card-action">
-                            <button
-                                    class="btn waves-effect waves-light"
-                                    type="submit"
-                                    name="action"
-                            >
-                                Search
-                                <i class="material-icons right">search</i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+<header>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-newspaper"></i>
+                News App
+            </a>
+        </div>
+    </nav>
+</header>
+<div class="container-fluid">
+    <div class="main-form-wrapper">
+        <form name="newsControls">
+            <div class="mb-3 form-floating">
+                <select class="form-select" name="country" id="country" aria-label="Floating label select example">
+                    <option value="ua">Ukraine</option>
+                    <option value="ru">Russia</option>
+                    <option value="us">United States</option>
+                </select>
+                <label for="country">Select country</label>
             </div>
+            <div class="mb-3">
+                <label for="search" class="form-label">Search</label>
+                <input type="text" class="form-control" name="search" id="search">
+            </div>
+            <div class="d-grid gap-2 col-4 mx-auto">
+                <button class="btn btn-primary" type="submit">
+                    <span class="submit-btn-text">Submit</span>
+                    <!--<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>-->
+            </div>
+        </form>
+    </div>
+    <div class="news-container overflow-hidden">
+        <div class="row bottom-buffer">
+
         </div>
     </div>
 </div>
-<div class="news-container">
-    <div class="container">
-        <div class="row grid-container"></div>
-    </div>
-</div>
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
