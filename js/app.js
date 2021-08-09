@@ -61,6 +61,8 @@ const http = customHttp();
 const form = document.forms['newsControls'];
 const countrySelect = form.elements['country'];
 const searchInput = form.elements['search'];
+const submitBtnText = document.getElementById('submitBtnText');
+const submitBtnSpinner = document.getElementById('submitBtnSpinner');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -171,15 +173,12 @@ function clearContainer(container) {
 
 //Preloader
 function showPreloader() {
-    document.body.insertAdjacentHTML('afterbegin', '  ' +
-        '<div class="progress">\n' +
-        '   <div class="indeterminate"></div>\n' +
-        '</div>'
-    );
+    submitBtnText.textContent = 'Loading...';
+    submitBtnSpinner.style.display = 'inline-block';
 }
 
 //Remove Preloader
 function removePreloader() {
-    const loader = document.querySelector('.progress');
-    if (loader) loader.remove();
+    submitBtnText.textContent = 'Submit';
+    submitBtnSpinner.style.display = 'none';
 }
