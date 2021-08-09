@@ -32,9 +32,20 @@
                 </select>
                 <label for="country">Select country</label>
             </div>
+            <div class="mb-3 form-floating">
+                <select class="form-select" name="category" id="category" aria-label="Floating label select example">
+                    <option value="general">General</option>
+                    <option value="business">Business</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="health">Health</option>
+                    <option value="science">Science</option>
+                    <option value="sports">Sports</option>
+                    <option value="technology">Technology</option>
+                </select>
+                <label for="category">Select category</label>
+            </div>
             <div class="mb-3">
-                <label for="search" class="form-label">Search</label>
-                <input type="text" class="form-control" name="search" id="search">
+                <input type="text" class="form-control" name="search" id="search" placeholder="Search">
             </div>
             <div class="d-grid gap-2 col-4 mx-auto">
                 <button class="btn btn-primary" type="submit" id="submit_btn">

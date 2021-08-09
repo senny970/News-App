@@ -44,6 +44,7 @@ body {
 
 .news-card {
     width: auto;
+    box-shadow: -9px 9px 8px 0 rgba(34, 60, 80, 0.2);
 }
 
 .news-card-img {
