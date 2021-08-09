@@ -145,11 +145,11 @@ function newsTemplate({urlToImage, title, url, description}) {
     return `
         <div class="col col-lg-3 col-bottom-buffer">
             <div class="card news-card">
-                <img src="${urlToImage}" class="card-img-top news-card-img" alt="preview">
+                <img src="${urlToImage || 'https://via.placeholder.com/350x250'}" class="card-img-top news-card-img" alt="preview">
                 <div class="card-body news-card-body">
-                    <h5 class="card-title news-card-title">${title}</h5>
-                    <p class="card-text news-card-text">${description}</p>
-                    <a href="${url}" class="btn btn-primary news-card-link" target="_blank">More details</a>
+                    <h5 class="card-title news-card-title">${title || 'Title'}</h5>
+                    <p class="card-text news-card-text">${description || 'Description'}</p>
+                    <a href="${url || '#'}" class="btn btn-primary news-card-link" target="_blank">More details</a>
                 </div>
             </div>
         </div>
