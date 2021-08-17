@@ -1,61 +1,15 @@
 // Custom Http Module
-function customHttp() {
+function http() {
     return {
-        get(url, cb) {
-            try {
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', url);
-                xhr.addEventListener('load', () => {
-                    if (Math.floor(xhr.status / 100) !== 2) {
-                        cb(`Error. Status code: ${xhr.status}`, xhr);
-                        return;
-                    }
-                    const response = JSON.parse(xhr.responseText);
-                    cb(null, response);
-                });
-
-                xhr.addEventListener('error', () => {
-                    cb(`Error. Status code: ${xhr.status}`, xhr);
-                });
-
-                xhr.send();
-            } catch (error) {
-                cb(error);
-            }
+        async get(url) {
+            const response = await fetch(url);
+            return await response.json();
         },
-        post(url, body, headers, cb) {
-            try {
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', url);
-                xhr.addEventListener('load', () => {
-                    if (Math.floor(xhr.status / 100) !== 2) {
-                        cb(`Error. Status code: ${xhr.status}`, xhr);
-                        return;
-                    }
-                    const response = JSON.parse(xhr.responseText);
-                    cb(null, response);
-                });
-
-                xhr.addEventListener('error', () => {
-                    cb(`Error. Status code: ${xhr.status}`, xhr);
-                });
-
-                if (headers) {
-                    Object.entries(headers).forEach(([key, value]) => {
-                        xhr.setRequestHeader(key, value);
-                    });
-                }
-
-                xhr.send(JSON.stringify(body));
-            } catch (error) {
-                cb(error);
-            }
-        },
-    };
+    }
 }
 
 // Init http module
-const http = customHttp();
+const http_obj = http();
 
 //Elements
 const form = document.forms['newsControls'];
@@ -73,15 +27,21 @@ form.addEventListener('submit', (e) => {
 const newsService = (function () {
     //https://newsapi.org/sources
     const apiKey = 'f8a92a36ea064c52ae43f8f6f654ec1d';
+    //Old Api
     // const apiUrl = 'https://news-api-v2.herokuapp.com';
     const apiUrl = 'https://newsapi.org/v2';
 
     return {
-        topHeadlines(country = 'ua', category = 'business', cb) {
-            http.get(`${apiUrl}/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`, cb);
+        topHeadlines(country = 'ua', category = 'business', resolve, rejected) {
+            http_obj.get(`${apiUrl}/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`)
+                .then(data => resolve(data))
+                .catch(err => rejected(err));
+
         },
-        everything(query, cb) {
-            http.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`, cb);
+        everything(query,  resolve, rejected) {
+            http_obj.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`)
+                .then(data => resolve(data))
+                .catch(err => rejected(err));
         }
     };
 })();
@@ -101,28 +61,25 @@ function loadNews() {
     const category = categorySelect.value;
 
     if (!searchText) {
-        newsService.topHeadlines(country, category, onGetResponse);
+        newsService.topHeadlines(country, category, onGetResponse, onRejected);
     } else {
-        newsService.everything(searchText, onGetResponse);
+        newsService.everything(searchText, onGetResponse, onRejected);
     }
 }
 
 //On get response from server
-function onGetResponse(err, res) {
+function onGetResponse(res) {
     removePreloader();
-
-    if (err) {
-        console.error(err);
-        showAlert(err, 'alert-danger');
-        return;
-    }
 
     if (!res.articles.length) {
         showAlert('News not found!', 'alert-warning');
         return;
     }
-
     renderNews(res.articles)
+}
+
+function onRejected(err) {
+    console.error(err);
 }
 
 //Render news
@@ -145,7 +102,7 @@ function renderNews(news) {
 //News item template
 function newsTemplate({urlToImage, title, url, description}) {
     return `
-        <div class="col col-lg-3 col-bottom-buffer">
+        <div class="col col-md-3 col-bottom-buffer">
             <div class="card news-card">
                 <img src="${urlToImage || 'https://via.placeholder.com/350x250'}" class="card-img-top news-card-img" alt="preview">
                 <div class="card-body news-card-body">
